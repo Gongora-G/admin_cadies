@@ -1,0 +1,54 @@
+# Diagrama de interacción Cliente-Servidor (Sockets TCP)
+
+Cliente (cliente.py)                Servidor (servidor.py)
+-------------------                ----------------------
+        |                                   |
+        | 1. connect()                      |
+        |----------------------------------->|
+        |                                   | 2. accept()
+        |                                   |    (espera conexión)
+        |                                   |
+        | 3. sendall("Hola...")             |
+        |----------------------------------->|
+        |                                   | 4. recv() (recibe mensaje)
+        |                                   |    print() (muestra mensaje)
+        |                                   | 5. sendall("Mensaje recibido...")
+        |                                   |----------------------------------->|
+        | 6. recv() (recibe respuesta)      |
+        |<-----------------------------------|
+        | 7. print() (muestra respuesta)     |
+        |                                   |
+        | 8. close()                        |
+        |----------------------------------->|
+        |                                   | 9. recv() (detecta cierre)
+        |                                   |    break (sale del bucle)
+
+# ¿Qué pasa detrás?
+- El servidor abre un puerto y queda "escuchando" conexiones.
+- El cliente inicia la conexión usando la IP y puerto del servidor.
+- Cuando el cliente se conecta, el sistema operativo del servidor crea un canal privado para esa comunicación.
+- Los mensajes viajan como paquetes TCP a través de la red local (o internet si fuera el caso).
+- El servidor y el cliente usan métodos sendall() y recv() para intercambiar datos.
+- Cuando el cliente termina, cierra la conexión y el servidor lo detecta y finaliza el ciclo.
+
+# Nota
+Todo esto ocurre en milisegundos y el canal TCP garantiza que los mensajes lleguen completos y en orden.
+
+# Glosario de términos clave
+
+- **TCP (Transmission Control Protocol)**: Protocolo de red que garantiza la entrega ordenada y completa de los datos entre dos dispositivos.
+- **Socket**: Punto final de una comunicación entre dos programas a través de la red.
+- **Puerto**: Número lógico que identifica una aplicación o servicio específico en un dispositivo de red.
+- **IP (Internet Protocol)**: Dirección única que identifica a un dispositivo en una red.
+- **Cliente**: Programa que inicia la comunicación solicitando un servicio.
+- **Servidor**: Programa que espera y responde a las solicitudes de los clientes.
+- **bind()**: Método que asocia un socket a una dirección IP y puerto.
+- **listen()**: Método que pone al servidor en modo de espera para aceptar conexiones.
+- **accept()**: Método que acepta una conexión entrante de un cliente.
+- **connect()**: Método que usa el cliente para conectarse al servidor.
+- **sendall()**: Método para enviar datos a través del socket.
+- **recv()**: Método para recibir datos a través del socket.
+- **close()**: Método para cerrar la conexión del socket.
+- **Paquete**: Unidad de datos que se transmite por la red.
+- **Canal de comunicación**: Ruta lógica creada entre cliente y servidor para intercambiar datos.
+- **localhost**: Nombre especial que se refiere a la propia computadora (IP 127.0.0.1).
