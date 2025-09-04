@@ -1,0 +1,51 @@
+# Explicación detallada: Comunicación UDP entre cliente y servidor
+
+## Comportamiento general
+
+- El servidor UDP se ejecuta y queda "escuchando" en una IP y puerto específicos.
+- El cliente UDP envía un mensaje al servidor y espera una respuesta.
+- El servidor recibe el mensaje, muestra la información del cliente (IP y puerto origen) y responde con una confirmación.
+- El cliente muestra la respuesta recibida del servidor.
+- Cada vez que se ejecuta el cliente, el sistema operativo le asigna un puerto efímero (aleatorio) para la comunicación.
+- Si se envían varios mensajes seguidos desde el mismo cliente, el puerto origen se mantiene igual. Si se ejecutan varios clientes, cada uno puede tener un puerto diferente.
+
+## Explicación de UDP
+
+- UDP (User Datagram Protocol) es un protocolo de red no orientado a conexión.
+- No garantiza la entrega ni el orden de los mensajes.
+- Es rápido y simple, ideal para aplicaciones donde la velocidad es más importante que la fiabilidad (por ejemplo, streaming, juegos en línea).
+- Cada mensaje (datagrama) se envía de forma independiente.
+- El servidor no mantiene una "conexión" con los clientes, solo recibe y responde datagramas.
+
+## Glosario de términos y funciones
+
+- **UDP (User Datagram Protocol):** Protocolo de red rápido, no orientado a conexión, sin garantía de entrega.
+- **Socket:** Punto final de comunicación entre dos programas.
+- **Puerto:** Número lógico que identifica un servicio en una máquina.
+- **IP:** Dirección única de un dispositivo en la red.
+- **AF_INET:** Familia de direcciones para IPv4.
+- **SOCK_DGRAM:** Tipo de socket para UDP.
+- **bind():** Asocia el socket a una IP y puerto.
+- **sendto():** Envía datos a una dirección específica.
+- **recvfrom():** Recibe datos y devuelve la dirección del remitente.
+- **encode():** Convierte un string a bytes.
+- **decode():** Convierte bytes a string.
+- **Puerto efímero:** Puerto temporal asignado por el sistema operativo para la comunicación de un cliente.
+
+## Ejemplo de interacción
+
+1. El servidor muestra: `Servidor UDP escuchando en 127.0.0.1:5005`
+2. El cliente envía: `Hola servidor UDP!`
+3. El servidor muestra: `Mensaje recibido de ('127.0.0.1', 55857): Hola servidor UDP!`
+   - El número (por ejemplo, 55857) es el puerto efímero del cliente.
+4. El servidor responde: `Mensaje recibido`
+5. El cliente muestra: `Respuesta del servidor: Mensaje recibido`
+
+## Comentario sobre los puertos
+- El puerto del servidor es fijo (5005 en este caso).
+- El puerto del cliente cambia cada vez que se ejecuta el cliente (a menos que se especifique manualmente).
+- Esto permite que varios clientes se comuniquen con el mismo servidor sin interferencias.
+
+---
+
+Este archivo te ayuda a entender el funcionamiento y la interacción entre los dos programas, así como los conceptos clave de UDP y sockets en Python.
